@@ -61,6 +61,7 @@
       const marker = document.createElement("span");
       marker.className = "answer-marker";
       marker.setAttribute("aria-hidden", "true");
+      marker.textContent = String.fromCharCode(65 + index);
       const text = document.createElement("span");
       text.className = "answer-text";
       text.textContent = option.text;
@@ -86,15 +87,17 @@
 
   function showResult() {
     const scores = new Map(data.houses.map((house) => [house.id, 0]));
+    const firstPicks = new Map();
     answers.forEach((optionIndex, questionIndex) => {
       const houseId = data.questions[questionIndex].options[optionIndex].houseId;
       scores.set(houseId, scores.get(houseId) + 1);
+      if (!firstPicks.has(houseId)) firstPicks.set(houseId, questionIndex);
     });
 
-    let winner = data.houses[0];
-    for (const house of data.houses.slice(1)) {
-      if (scores.get(house.id) > scores.get(winner.id)) winner = house;
-    }
+    const highestScore = Math.max(...scores.values());
+    const winner = data.houses
+      .filter((house) => scores.get(house.id) === highestScore)
+      .sort((first, second) => (firstPicks.get(first.id) ?? Infinity) - (firstPicks.get(second.id) ?? Infinity))[0];
 
     resultTitle.textContent = winner.name;
     resultDescription.textContent = winner.description;

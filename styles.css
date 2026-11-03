@@ -436,15 +436,23 @@ h1 em {
 }
 
 .answer-marker {
-  width: 18px;
-  height: 18px;
-  flex: 0 0 18px;
+  width: 23px;
+  height: 23px;
+  flex: 0 0 23px;
+  display: grid;
+  place-items: center;
   border: 1px solid #bbb8ae;
   border-radius: 50%;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 600;
+  transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;
 }
 
 .is-selected .answer-marker {
-  border: 5px solid var(--green);
+  border-color: var(--green);
+  background: var(--green);
+  color: #fff;
 }
 
 .answer-text {

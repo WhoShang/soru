@@ -1,30 +1,11 @@
 # Dört Ev Testi
 
-Türkçe, mobil uyumlu bir kişilik testi arayüzü. Uygulama ek bağımlılık gerektirmez; `index.html` dosyasını bir tarayıcıda açarak çalıştırabilirsiniz.
+Türkçe, mobil uyumlu, statik bir kişilik testi. Uygulama ek bağımlılık veya derleme adımı gerektirmez. `index.html` dosyası, `styles.css`, `data.js` ve `app.js` ile birlikte sunulmalıdır.
 
-## İçeriği ekleme
+## İçerik ve puanlama
 
-Test soruları ve ev açıklamaları `data.js` içindeki `TEST_DATA` nesnesinden beslenir. Testin başlaması için dört ev ve tam 20 soru tanımlanmalıdır. Her soru en az iki seçenek içermeli; her seçenek, `houseId` alanıyla dört evden birine puan vermelidir.
+20 soru ve dört evin açıklamaları `data.js` içindeki `TEST_DATA` nesnesinde tanımlıdır. Her sorunun A, B, C ve D seçenekleri sırasıyla CANDAN, MİNA, RÜYA ve EVA'ya bir puan verir. En çok puan alan ev sonuç olarak gösterilir; eşitlikte test sırasında puan alan evlerden daha önce seçim yapılan kazanır.
 
-```js
-window.TEST_DATA = {
-  houses: [
-    { id: "ev-1", name: "Ev adı", description: "Sonuç açıklaması" },
-    { id: "ev-2", name: "Ev adı", description: "Sonuç açıklaması" },
-    { id: "ev-3", name: "Ev adı", description: "Sonuç açıklaması" },
-    { id: "ev-4", name: "Ev adı", description: "Sonuç açıklaması" }
-  ],
-  questions: [
-    {
-      prompt: "Soru metni",
-      options: [
-        { text: "Seçenek metni", houseId: "ev-1" },
-        { text: "Başka bir seçenek", houseId: "ev-2" }
-      ]
-    }
-    // Toplam 20 soru olacak şekilde devam edin.
-  ]
-};
-```
+## Vercel'de `/test` yolu
 
-Sonuç, kullanıcının seçimleriyle en çok puan alan evdir. Eşitlik durumunda test boyunca daha erken soruda puan alınan ev seçilir.
+Bu klasör tek başına Vercel'e dağıtılırsa kendi projesinin kök adresinde yayınlanır. Mevcut domainin `/test/` adresinde yayınlamak için bu dosyaları domaini sunan mevcut Vercel projesinin statik dosyalarına `/test/` altında ekleyin (ör. `public/test/`) ve yolu o projeden sunun. Yalnızca ayrı bir Vercel projesine domain bağlamak, mevcut domain altında `/test` yolunu otomatik olarak oluşturmaz.
